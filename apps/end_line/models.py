@@ -17,3 +17,4 @@ class EndLine(models.Model):
     class Meta:
         verbose_name = "尽头线信息"
         verbose_name_plural = verbose_name
+
