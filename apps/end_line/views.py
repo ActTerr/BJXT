@@ -7,27 +7,16 @@ import time
 # Create your views here.
 class LineTotalView(View):
     def get(self, request):
-        unit = request.GET.get("UNIT", '')
-        el = getTime()
-        lines = EndLine.objects.all().filter(unit=unit, time=el)
-        return render(request, "index.html", {"total_lines": lines})
-
-
-def getTime():
-    element_time = time.localtime(time.time())
-    hour = time.localtime()[3]
-    if hour < 8:
-        element_time[2] = element_time[2] - 1
-        element_time[3] = 18
-    elif 8 < hour < 18:
-        element_time[3] = 8
-    else:
-        element_time[3] = 18
-
-    for i in range(4, 9):
-        element_time[i] = 0
-
-    return time.strftime('%Y-%m-%d %H:%M:%S', element_time)
+        user = request.user
+        if user.is_authenticated():
+            unit = user.unit
+            auxiliary = EndLine.objects.all().filter(UNIT=unit).order_by("-TIME")
+            line = auxiliary[0]
+            t = line.TIME
+            lines = EndLine.objects.all().filter(TIME=t)
+            return render(request, "index.html", {"total_lines": lines})
+        else:
+            return render(request, "login.html")
 
 
 class LineDetailView(View):
@@ -36,4 +25,4 @@ class LineDetailView(View):
         line_id = request.GET.get('LINE_ID', '')
         lines = EndLine.objects.all().filter(unit=unit, line_id=line_id)
 
-        return render(request, "index.html", {"detail_lines": lines})
+        return render(request, "end_line.html", {"detail_lines": lines})

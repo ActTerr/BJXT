@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.views.generic import View
+from django.shortcuts import redirect
 
 from froms import LoginForm
 from django.contrib.auth import authenticate, login
@@ -22,7 +23,8 @@ class LoginView(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'index.html')
+                    print '登录成功'
+                    return redirect('index')
                 else:
                     return render(request, 'login.html', {"msg": "用户未激活"})
             else:

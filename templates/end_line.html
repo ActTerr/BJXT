@@ -2,6 +2,28 @@
 <head>
     <meta charset="UTF-8">
 </head>
+  <div class="fl form-box">
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>传感器</td>
+                <td>电台</td>
+                <td>电池</td>
+                <td>温度</td>
+                <td>时间</td>
+            </tr>
 
+            {% for line in total_lines %}
+                <tr class="btn" href="end_line">
+                    <td>{{ line.LINE_ID }}</td>
+                    <td>{{ line.SENSOR }}</td>
+                    <td>{{ line.RADIO_STATION }}</td>
+                    <td>{{ line.BATTERY }}</td>
+                    <td>{{ line.TEMPERATURE }}</td>
+                    <td>{{ line.TIME }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>
