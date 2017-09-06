@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', xadmin.site.urls),
     url('^$', LineTotalView.as_view(), name="index"),
     url(r'^login/', LoginView.as_view(), name="login"),
-    url(r'^detail/', LineDetailView.as_view, name="detail")
+    url(r'^detail/', LineDetailView.as_view(), name="detail")
 ]

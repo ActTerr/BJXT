@@ -13,7 +13,7 @@ class LineTotalView(View):
             auxiliary = EndLine.objects.all().filter(UNIT=unit).order_by("-TIME")
             line = auxiliary[0]
             t = line.TIME
-            lines = EndLine.objects.all().filter(TIME=t)
+            lines = EndLine.objects.all().filter(TIME=t).order_by("LINE_ID")
             return render(request, "index.html", {"total_lines": lines})
         else:
             return render(request, "login.html")
@@ -21,8 +21,10 @@ class LineTotalView(View):
 
 class LineDetailView(View):
     def get(self, request):
-        unit = request.GET.get("UNIT", '')
-        line_id = request.GET.get('LINE_ID', '')
-        lines = EndLine.objects.all().filter(unit=unit, line_id=line_id)
+        user = request.user
+        unit = user.unit
+        line_id = request.GET.get('line_id', '')
+        print line_id
+        lines = EndLine.objects.all().filter(UNIT=unit, LINE_ID=line_id)
 
         return render(request, "end_line.html", {"detail_lines": lines})

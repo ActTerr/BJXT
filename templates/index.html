@@ -25,7 +25,7 @@
 
                         <div class="personal">
                             <dl class="user fr">
-                                <dd>{{ request. }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                <dd><img class="down fr" src="/static/images/top_down.png"/></dd>
                                 <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/>
                                 </dt>
                             </dl>
@@ -84,13 +84,20 @@
             </tr>
 
             {% for line in total_lines %}
-                <tr class="btn" href="{% url 'detail' %}">
+                <tr>
                     <td>{{ line.LINE_ID }}</td>
                     <td>{{ line.SENSOR }}</td>
                     <td>{{ line.RADIO_STATION }}</td>
                     <td>{{ line.BATTERY }}</td>
                     <td>{{ line.TEMPERATURE }}</td>
                     <td>{{ line.TIME }}</td>
+                    <td class="btn">
+                        <form action="{% url 'detail' %}" method="get">
+                        <input type='hidden' name='line_id' value={{ line.LINE_ID }}   />
+                            <input type="submit" value="查看历史记录"/>
+                            {% csrf_token %}
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
